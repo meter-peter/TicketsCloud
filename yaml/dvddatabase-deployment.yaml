@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvddatabase-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dvddatabase
+  template:
+    metadata:
+      labels:
+        app: dvddatabase
+    spec:
+      containers:
+        - name: dvddatabase
+          image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: pass1312
+            - name: MYSQL_DATABASE
+              value: dvds
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: dbvolume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: dbvolume
+          persistentVolumeClaim:
+            claimName: db-persistent-volume

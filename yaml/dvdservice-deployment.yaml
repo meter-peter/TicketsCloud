@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvdservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dvdservice
+  template:
+    metadata:
+      labels:
+        app: dvdservice
+    spec:
+      containers:
+        - name: dvdservice
+          image: dvdservice
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: servicevolume
+              mountPath: /app/logs
+      volumes:
+        - name: servicevolume
+          emptyDir: {}

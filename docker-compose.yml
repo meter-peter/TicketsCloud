@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  dvddatabase:
+    image: mysql:latest
+    container_name: dvddatabase
+    networks:
+      - dvdnetwork
+    volumes:
+      - dbvolume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass1312
+      - MYSQL_DATABASE=dvds
+
+  dvdservice:
+    image: dvdservice
+    container_name: dvdservice
+    networks:
+      - dvdnetwork
+    ports:
+      - 8080:8080
+    volumes:
+      - servicevolume:/app/logs
+
+networks:
+  dvdnetwork:
+
+volumes:
+  dbvolume:
+  servicevolume:
