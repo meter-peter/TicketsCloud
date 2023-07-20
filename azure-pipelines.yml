@@ -1,0 +1,36 @@
+# azure-pipelines.yml
+
+trigger:
+  branches:
+    include:
+      - master
+
+pool: default
+
+steps:
+- script: |
+    echo "Installing Java JDK..."
+    apt-get update
+    apt-get install -y openjdk-8-jdk
+  displayName: 'Install Java'
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    goals: 'clean package'
+  displayName: 'Maven Build'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**/*.war'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy WAR artifact'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'war'
+  displayName: 'Publish Artifact'
