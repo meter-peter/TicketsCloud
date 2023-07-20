@@ -5,8 +5,7 @@ trigger:
     include:
       - main
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool : default
 
 steps:
 - script: |
