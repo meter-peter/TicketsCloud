@@ -9,25 +9,18 @@ pool: default
 
 steps:
 - script: |
-    echo "Installing Java JDK..."
-    sudo apt-get update
-    sudo apt-get install -y openjdk-8-jdk
-
-    echo "Configuring Java environment variables..."
-    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    echo "Downloading Java JDK..."
+    wget -q https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u372-b07/openlogic-openjdk-8u372-b07-linux-x64.tar.gz
+    tar -xzf jdk-8u302-linux-x64.tar.gz -C /usr/lib/jvm
+    export JAVA_HOME=/usr/lib/jvm
     export PATH=$JAVA_HOME/bin:$PATH
   displayName: 'Install Java'
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '8'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
 
 - script: |
     echo "Downloading Maven..."
-    wget -q https://apache.osuosl.org/maven/maven-3/3.9.3/binaries/apache-maven-3.9.3-bin.tar.gz
-    tar -xzf apache-maven-3.9.3-bin.tar.gz -C /tmp
-    sudo mv /tmp/apache-maven-3.9.3 /usr/share/maven
+    wget -q https://apache.osuosl.org/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz
+    tar -xzf apache-maven-3.8.3-bin.tar.gz -C /tmp
+    mv /tmp/apache-maven-3.8.3 /usr/share/maven
 
     echo "Configuring Maven environment variables..."
     export MAVEN_HOME=/usr/share/maven
