@@ -18,9 +18,9 @@ steps:
 
 - script: |
     echo "Downloading Maven..."
-    wget -q https://apache.osuosl.org/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz
-    tar -xzf apache-maven-3.8.3-bin.tar.gz -C /tmp
-    mv /tmp/apache-maven-3.8.3 /usr/share/maven
+    wget -q https://apache.osuosl.org/maven/maven-3/3.9.3/binaries/apache-maven-3.9.3-bin.tar.gz
+    tar -xzf apache-maven-3.9.3-bin.tar.gz -C /tmp
+    mv /tmp/apache-maven-3.9.3 /usr/share/maven
 
     echo "Configuring Maven environment variables..."
     export MAVEN_HOME=/usr/share/maven
