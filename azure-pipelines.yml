@@ -10,7 +10,7 @@ pool: default
 steps:
 - script: |
     echo "Configuring Java environment variables..."
-    export JAVA_HOME=$JAVA_HOME_8_X64
+    export JAVA_HOME=$JAVA_HOME
     export PATH=$JAVA_HOME/bin:$PATH
   displayName: 'Configure Java Home'
 
