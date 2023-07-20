@@ -3,16 +3,26 @@
 trigger:
   branches:
     include:
-      - master
+      - main
 
-pool: default
+pool:
+  vmImage: 'ubuntu-latest'
 
 steps:
 - script: |
     echo "Installing Java JDK..."
     apt-get update
     apt-get install -y openjdk-8-jdk
-  displayName: 'Install Java'
+
+    echo "Downloading Maven..."
+    wget -q https://apache.osuosl.org/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz
+    tar -xzf apache-maven-3.8.3-bin.tar.gz -C /usr/share/
+    mv /usr/share/apache-maven-3.8.3 /usr/share/maven
+
+    echo "Configuring Maven environment variables..."
+    export MAVEN_HOME=/usr/share/maven
+    export PATH=$MAVEN_HOME/bin:$PATH
+  displayName: 'Install Java and Maven'
 
 - task: Maven@3
   inputs:
