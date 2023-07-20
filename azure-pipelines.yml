@@ -5,16 +5,14 @@ trigger:
     include:
       - main
 
-pool : default
+pool: default
 
-# azure-pipelines.yml
 steps:
-
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '8'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+- script: |
+    echo "Configuring Java environment variables..."
+    export JAVA_HOME=$JAVA_HOME_8_X64
+    export PATH=$JAVA_HOME/bin:$PATH
+  displayName: 'Configure Java Home'
 
 - script: |
     echo "Downloading Maven..."
@@ -47,4 +45,3 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'war'
   displayName: 'Publish Artifact'
-
